@@ -12,7 +12,7 @@ app.controller("tController", ($scope, $interval) => {
 
 	$scope.genNumberArray = (x) => Array(20).fill(0).map((_,i) => i+1);
 	$scope.getRoundName = (roundNumber) => $scope.roundTypes[$scope.rounds[roundNumber].type] + ($scope.rounds[roundNumber].type < 3 ? $scope.rounds[roundNumber].num : "");
-	$scope.addRandomRound = () => $scope.rounds.push({type: Math.floor(Math.random()*$scope.roundTypes.length), num: Math.floor(Math.random()*20)});
+	$scope.addRandomRound = () => $scope.rounds.push({type: Math.floor(Math.random()*$scope.roundTypes.length), num: Math.floor(Math.random()*20) + 1});
 	$scope.sortPlayers = () => $scope.players.concat().sort((a,b) => b.score - a.score);
 
 	$scope.submitScore = () => {
