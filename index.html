@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+		<title></title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<link rel="stylesheet"href="https://www.w3schools.com/w3css/4/w3.css"/>
+		<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  </head>
+  <body>
+		<div class="w3-display" ng-app="tApp" ng-controller="tController">
+			<!--
+				Add players
+			-->
+			<div class="w3-display-middle" ng-hide="numPlayers">
+				Add Players
+				<table class="w3-table-all">
+					<tr><th>Name</th><th>Handicap</th><th>Edit</th></tr>
+					<tr ng-repeat="(index, player) in players">
+						<td>{{player.name}}</td>
+						<td><input ng-model="player.handicap" type="number" value="0" /></td>
+						<td><i ng-click="players.splice(index,1)" class="w3-button fa fa-trash"></i></td>
+					</tr>
+					<tr>
+						<td><p class="w3-button w3-border w3-right"ng-click="input.playerName?players.push({name:input.playerName,handicap:0}):0;input.playerName=''">Add</p></td>
+						<td><input class="w3-input" ng-model="input.playerName" /></td>
+					</tr>
+				</table>
+				<p class="w3-green w3-right w3-button" ng-click="playersAdded()">Confirm</p>
+			</div>
+			<!--
+				Add rounds
+			-->
+			<div class="w3-display-topmiddle" ng-hide="firstRound || gameStarted || gameFinished">
+				<table class="w3-table-all" ng-show="numPlayers">
+					<tr class="w3-grey"><th>Type</th><th>Edit</th></tr>
+					<tr ng-repeat="(index, round) in rounds"><td>{{roundTypes[round.type] + (round.type < 3 ? round.num : "")}}</td><td><i ng-click="rounds.splice(index,1)" class="fa fa-trash w3-button w3-right"></i></td></tr>
+					<tr>
+						<td><p class="w3-button w3-border w3-right" ng-click="rounds.push({type: input.addRoundType, num: input.addRoundNumber})">Add</p></td>
+						<td>
+							<select ng-model="input.addRoundType"><option ng-repeat="(index,type) in roundTypes"value="{{index}}"selected="selected">{{type}}</option></select>
+							<select ng-hide="input.addRoundType > 2" ng-model="input.addRoundNumber" ng-options="x for x in genNumberArray(20)"></select>
+							<br/><p class="w3-button w3-small" ng-click="addRandomRound()">Add random</p>
+						</td>
+					</tr>
+					<tr><td><p class="w3-button w3-green" ng-click="firstRound = true">START</p></td></tr>
+				</table>
+			</div>
+			<!--
+				First round
+			-->
+			<div class="w3-display-topmiddle" ng-show="firstRound">
+				<p class="w3-xxxlarge">Round: Highest Score</p>
+				<p class="w3-xlarge">Player #{{currentPlayer + 1}}: {{players[currentPlayer].name}}</p>
+				Enter score
+				<input class="w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
+				<p class="w3-button w3-green w3-large" ng-click="submitRoundOne()">Confirm</p>
+			</div>
+			<!--
+				Rest of the rounds
+			-->
+			<div class="w3-display-topmiddle" ng-show="gameStarted">
+				<p class="w3-xxxlarge">Round {{currentRound + 1}}/{{rounds.length}}: {{getRoundName(currentRound)}}</p>
+				<p class="w3-xlarge">Player #{{currentPlayer + 1}}: {{players[currentPlayer].name}}</p>
+				<p ng-show="rounds[currentRound].type < 3">Enter number of {{getRoundName(currentRound)}}'s</p>
+				<p ng-hide="rounds[currentRound].type < 3">Enter score</p>
+				<input class="w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
+				<p class="w3-button w3-green w3-large" ng-click="submitScore()">Confirm</p>
+			</div>
+			<!--
+				Score sheet
+			-->
+			<div class="w3-display-topleft" ng-show="firstRound || gameStarted">
+				<table class="w3-table-all">
+					<tr><th>Name</th><th>Score</th></tr>
+					<tr class="{{currentPlayer == index ? 'w3-lime' : ''}}" ng-repeat="(index, player) in players">
+						<td>{{player.name}}</td><td><p>{{player.score}}</p></td>
+					</tr>
+				</table>
+			</div>
+			<!--
+				Game finished
+			-->
+			<div class="w3-display-topmiddle" ng-show="gameFinished">
+				<table class="w3-table-all">
+					<tr><th>Name</th><th>Score</th></tr>
+					<tr class="" ng-repeat="(index, player) in sortPlayers()">
+						<td>{{player.name}}	</td>
+						<td><p>{{player.score}}</p></td>
+					</tr>
+					<tr>
+						<td><p class="w3-button w3-green" ng-click="replay()">Replay</p></td>
+						<td><p class="w3-button w3-green" ng-click="newGame()">New Game</p></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<script src="controller.js"></script>
+	</body>
+</html>
