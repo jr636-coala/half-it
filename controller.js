@@ -47,9 +47,9 @@ app.controller("tController", ($scope, $interval) => {
 			$scope.firstRound = false;
 			$scope.gameStarted = true;
 			$scope.currentPlayer = 0;
-		}
 		// Add the final round
 		$scope.rounds.push({type: 5, num: 0});
+		}
 	}
 
 	
