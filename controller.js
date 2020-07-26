@@ -4,7 +4,7 @@ app.controller("tController", ($scope, $interval) => {
 	$scope.players = [];
 	$scope.roundTypes = ["", "D", "T", "Bowtie", "Black-White-Black", "25 bull"];
 	$scope.rounds = [{type: 1, num: 19}, {type: 3, num: 0}];
-	$scope.defaultrounds = $scope.rounds;
+	$scope.defaultrounds = $scope.rounds.concat();
 	$scope.input = {numPlayers: 1, addRoundType: 0, addRoundNumber: 1, playerName: "", currentScoreNum: 0};
 
 	$scope.currentRound = 0;
@@ -56,7 +56,7 @@ app.controller("tController", ($scope, $interval) => {
 
 	$scope.newGame = () => {
 		$scope.players = [];
-		$scope.rounds = $scope.defaultrounds;
+		$scope.rounds = $scope.defaultrounds.concat();
 		$scope.numPlayers = 0;
 		$scope.gameFinished = false;
 	}
