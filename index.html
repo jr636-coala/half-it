@@ -13,17 +13,14 @@
 				Add players
 			-->
 			<div class="w3-mobile" ng-hide="numPlayers">
-				<p class="w3-xxlarge">Add Players</p>
 				<table class="w3-xlarge w3-table-all">
-					<tr><th>Name</th><th>Handicap</th><th>Edit</th></tr>
+					<tr><th>Players</th></tr>
 					<tr ng-repeat="(index, player) in players">
-						<td>{{player.name}}</td>
-						<td><input ng-model="player.handicap" type="number" value="0" /></td>
-						<td><i ng-click="players.splice(index,1)" class="w3-button fa fa-trash"></i></td>
+						<td><i ng-click="players.splice(index,1)" class="w3-button fa fa-times" style="color:red"></i>{{player.name}}</td>
 					</tr>
 					<tr>
-						<td><p class="w3-button w3-border w3-right"ng-click="input.playerName?players.push({name:input.playerName,handicap:0}):0;input.playerName=''">Add</p></td>
-						<td><input class="w3-input" ng-model="input.playerName" /></td>
+						<td><input class="w3-input" ng-model="input.playerName" />
+							<p class="w3-button w3-border w3-right"ng-click="input.playerName?players.push({name:input.playerName}):0;input.playerName=''">Add</p></td>
 					</tr>
 				</table>
 				<p class="w3-xlarge w3-green w3-right w3-button" ng-click="playersAdded()">Confirm</p>
@@ -33,15 +30,15 @@
 			-->
 			<div class="w3-mobile" ng-hide="firstRound || gameStarted || gameFinished">
 				<table class="w3-xlarge w3-table-all" ng-show="numPlayers">
-					<tr class="w3-grey"><th>Type</th><th>Edit</th></tr>
-					<tr ng-repeat="(index, round) in rounds"><td>{{roundTypes[round.type] + (round.type < 3 ? round.num : "")}}</td><td><i ng-click="rounds.splice(index,1)" class="fa fa-trash w3-button w3-right"></i></td></tr>
+					<tr class="w3-grey"><th>Round</th></tr>
+					<tr ng-repeat="(index, round) in rounds"><td><i ng-click="rounds.splice(index,1)" ng-init="input.addRoundType = 0" class="fa fa-times w3-button" style="color:red"></i>{{roundTypes[round.type].name + (round.type < 3 ? round.num : "")}}</td></tr>
 					<tr>
-						<td><p class="w3-button w3-border w3-right" ng-click="rounds.push({type: input.addRoundType, num: input.addRoundNumber})">Add</p></td>
 						<td>
-							<select ng-model="input.addRoundType"><option ng-repeat="(index,type) in roundTypes"value="{{index}}"selected="selected">{{type}}</option></select>
+							<select ng-model="input.addRoundType" ng-options="x.index as x.name for x in roundTypes"></select>
 							<select ng-hide="input.addRoundType > 2" ng-model="input.addRoundNumber" ng-options="x for x in genNumberArray(20)"></select>
-							<br/><p class="w3-button" ng-click="addRandomRound()">Add random</p>
+							<p class="w3-button w3-border" ng-click="rounds.push({type: input.addRoundType, num: input.addRoundNumber})">Add</p><br/><p class="w3-button" ng-click="addRandomRound()">Add random</p>
 						</td>
+							
 					</tr>
 					<tr><td><p class="w3-button w3-xxlarge w3-green" ng-click="firstRound = true">START</p></td></tr>
 				</table>

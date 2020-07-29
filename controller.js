@@ -2,7 +2,14 @@ var app = angular.module("tApp", []);
 app.controller("tController", ($scope, $interval) => {
 	$scope.numPlayers = 0;
 	$scope.players = [];
-	$scope.roundTypes = ["", "D", "T", "Bowtie", "Black-White-Black", "25 bull"];
+	$scope.roundTypes = [
+		{index: 0, name: "S"},
+		{index: 1, name: "D"},
+		{index: 2, name: "T"},
+		{index: 3, name: "Bowtie"},
+		{index: 4, name: "Black-White-Black"},
+		{index: 5, name: "25 bull"},
+	];
 	$scope.rounds = [{type: 1, num: 19}, {type: 3, num: 0}];
 	$scope.defaultrounds = $scope.rounds.concat();
 	$scope.input = {numPlayers: 1, addRoundType: 0, addRoundNumber: 1, playerName: "", currentScoreNum: 0};
@@ -11,7 +18,7 @@ app.controller("tController", ($scope, $interval) => {
 	$scope.currentPlayer = 0;
 
 	$scope.genNumberArray = (x) => Array(20).fill(0).map((_,i) => i+1);
-	$scope.getRoundName = (roundNumber) => $scope.roundTypes[$scope.rounds[roundNumber].type] + ($scope.rounds[roundNumber].type < 3 ? $scope.rounds[roundNumber].num : "");
+	$scope.getRoundName = (roundNumber) => $scope.roundTypes[$scope.rounds[roundNumber].type].name + ($scope.rounds[roundNumber].type < 3 ? $scope.rounds[roundNumber].num : "");
 	$scope.addRandomRound = () => $scope.rounds.push({type: Math.floor(Math.random()*$scope.roundTypes.length), num: Math.floor(Math.random()*20) + 1});
 	$scope.sortPlayers = () => $scope.players.concat().sort((a,b) => b.score - a.score);
 
@@ -69,6 +76,6 @@ app.controller("tController", ($scope, $interval) => {
 
 	$scope.playersAdded = () => {
 		$scope.numPlayers = $scope.players.length;
-		$scope.players.forEach(player => player.score = player.handicap);
+		$scope.players.forEach(player => player.score = 0);
 	}
 });
