@@ -19,7 +19,7 @@
 						<td><i ng-click="players.splice(index,1)" class="w3-button fa fa-times" style="color:red"></i>{{player.name}}</td>
 					</tr>
 					<tr>
-						<td><input class="w3-input" ng-model="input.playerName" />
+						<td><input class="w3-input w3-border" ng-model="input.playerName" />
 							<p class="w3-button w3-border w3-right"ng-click="input.playerName?players.push({name:input.playerName}):0;input.playerName=''">Add</p></td>
 					</tr>
 				</table>
@@ -31,11 +31,12 @@
 			<div class="w3-mobile" ng-hide="firstRound || gameStarted || gameFinished">
 				<table class="w3-jumbo w3-table-all" ng-show="numPlayers">
 					<tr class="w3-grey"><th>Round</th></tr>
-					<tr ng-repeat="(index, round) in rounds"><td><i ng-click="rounds.splice(index,1)" ng-init="input.addRoundType = 0" class="fa fa-times w3-button" style="color:red"></i>{{roundTypes[round.type].name + (round.type < 3 ? round.num : "")}}</td></tr>
+					<tr ng-repeat="(index, round) in rounds"><td><i ng-click="rounds.splice(index,1)" ng-init="input.addRoundType = 0" class="fa fa-times w3-button" style="color:red"></i>{{getRoundName(index)}}</td></tr>
 					<tr>
 						<td>
 							<select ng-model="input.addRoundType" ng-options="x.index as x.name for x in roundTypes"></select>
-							<select ng-hide="input.addRoundType > 2" ng-model="input.addRoundNumber" ng-options="x for x in genNumberArray(20)"></select>
+							<select ng-hide="input.addRoundType > 4" ng-model="input.addRoundNumber" ng-options="x for x in genNumberArray(20)"></select>
+							<input class="w3-input w3-border" ng-model="input.addRoundNumber" type="number" min="0" style="display:inline" ng-show="input.addRoundType == 5 || input.addRoundType == 6"></input>
 							<p class="w3-button w3-border" ng-click="rounds.push({type: input.addRoundType, num: input.addRoundNumber})">Add</p><br/><p class="w3-button" ng-click="addRandomRound()">Add random</p>
 						</td>
 							
@@ -46,7 +47,8 @@
 			<!--
 				Score sheet
 			-->
-			<div class="w3-mobile w3-third w3-margin-right" ng-show="firstRound || gameStarted">
+			<p class="w3-button w3-block w3-rest w3-jumbo w3-black" ng-click="showScoresheet = !showScoresheet" ng-show="firstRound || gameStarted">Scoresheet</p>
+			<div class="w3-margin-right w3-block w3-rest" ng-show="(firstRound || gameStarted) && showScoresheet">
 				<table class="w3-table-all w3-jumbo">
 					<tr><th>Name</th><th>Score</th></tr>
 					<tr class="{{currentPlayer == index ? 'w3-lime' : ''}}" ng-repeat="(index, player) in players">
@@ -58,7 +60,7 @@
 				First round
 			-->
 			<div class="w3-mobile w3-rest" ng-show="firstRound">
-				<p class="w3-xxxlarge">Round: Highest Score</p>
+				<b class="w3-xxxlarge">Round: Highest Score</b>
 				<p class="w3-xxlarge">Player #{{currentPlayer + 1}}: {{players[currentPlayer].name}}</p>
 				<p class="w3-jumbo">Enter score</p>
 				<input class="w3-jumbo w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
@@ -68,10 +70,10 @@
 				Rest of the rounds
 			-->
 			<div class="w3-mobile w3-rest" ng-show="gameStarted">
-				<p class="w3-xxxlarge">Round {{currentRound + 1}}/{{rounds.length}}: {{getRoundName(currentRound)}}</p>
+				<b class="w3-xxxlarge">Round {{currentRound + 1}}/{{rounds.length}}: {{getRoundName(currentRound)}}</b>
 				<p class="w3-xxlarge">Player #{{currentPlayer + 1}}: {{players[currentPlayer].name}}</p>
-				<p class="w3-jumbo" ng-show="rounds[currentRound].type < 3">Enter number of {{getRoundName(currentRound)}}'s</p>
-				<p class="w3-jumbo" ng-hide="rounds[currentRound].type < 3">Enter score</p>
+				<p class="w3-jumbo" ng-show="rounds[currentRound].type < 5">Enter number of {{getRoundName(currentRound)}}'s</p>
+				<p class="w3-jumbo" ng-hide="rounds[currentRound].type < 5">Enter score</p>
 				<input class="w3-jumbo w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
 				<p class="w3-jumbo w3-button w3-green w3-large" ng-click="submitScore()">Confirm</p>
 			</div>
