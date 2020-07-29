@@ -13,7 +13,7 @@
 				Add players
 			-->
 			<div class="w3-mobile" ng-hide="numPlayers">
-				<table class="w3-xlarge w3-table-all">
+				<table class="w3-jumbo w3-table-all">
 					<tr><th>Players</th></tr>
 					<tr ng-repeat="(index, player) in players">
 						<td><i ng-click="players.splice(index,1)" class="w3-button fa fa-times" style="color:red"></i>{{player.name}}</td>
@@ -23,13 +23,13 @@
 							<p class="w3-button w3-border w3-right"ng-click="input.playerName?players.push({name:input.playerName}):0;input.playerName=''">Add</p></td>
 					</tr>
 				</table>
-				<p class="w3-xlarge w3-green w3-right w3-button" ng-click="playersAdded()">Confirm</p>
+				<p class="w3-jumbo w3-green w3-right w3-button" ng-click="playersAdded()">Confirm</p>
 			</div>
 			<!--
 				Add rounds
 			-->
 			<div class="w3-mobile" ng-hide="firstRound || gameStarted || gameFinished">
-				<table class="w3-xlarge w3-table-all" ng-show="numPlayers">
+				<table class="w3-jumbo w3-table-all" ng-show="numPlayers">
 					<tr class="w3-grey"><th>Round</th></tr>
 					<tr ng-repeat="(index, round) in rounds"><td><i ng-click="rounds.splice(index,1)" ng-init="input.addRoundType = 0" class="fa fa-times w3-button" style="color:red"></i>{{roundTypes[round.type].name + (round.type < 3 ? round.num : "")}}</td></tr>
 					<tr>
@@ -40,14 +40,14 @@
 						</td>
 							
 					</tr>
-					<tr><td><p class="w3-button w3-xxlarge w3-green" ng-click="firstRound = true">START</p></td></tr>
+					<tr><td><p class="w3-button w3-jumbo w3-green" ng-click="firstRound = true">START</p></td></tr>
 				</table>
 			</div>
 			<!--
 				Score sheet
 			-->
 			<div class="w3-mobile w3-third w3-margin-right" ng-show="firstRound || gameStarted">
-				<table class="w3-table-all w3-xlarge">
+				<table class="w3-table-all w3-jumbo">
 					<tr><th>Name</th><th>Score</th></tr>
 					<tr class="{{currentPlayer == index ? 'w3-lime' : ''}}" ng-repeat="(index, player) in players">
 						<td>{{player.name}}</td><td><p>{{player.score}}</p></td>
@@ -60,9 +60,9 @@
 			<div class="w3-mobile w3-rest" ng-show="firstRound">
 				<p class="w3-xxxlarge">Round: Highest Score</p>
 				<p class="w3-xxlarge">Player #{{currentPlayer + 1}}: {{players[currentPlayer].name}}</p>
-				<p class="w3-xlarge">Enter score</p>
-				<input class="w3-xlarge w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
-				<p class="w3-xlarge w3-button w3-green w3-large" ng-click="submitRoundOne()">Confirm</p>
+				<p class="w3-jumbo">Enter score</p>
+				<input class="w3-jumbo w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
+				<p class="w3-jumbo w3-button w3-green w3-large" ng-click="submitRoundOne()">Confirm</p>
 			</div>
 			<!--
 				Rest of the rounds
@@ -70,16 +70,16 @@
 			<div class="w3-mobile w3-rest" ng-show="gameStarted">
 				<p class="w3-xxxlarge">Round {{currentRound + 1}}/{{rounds.length}}: {{getRoundName(currentRound)}}</p>
 				<p class="w3-xxlarge">Player #{{currentPlayer + 1}}: {{players[currentPlayer].name}}</p>
-				<p class="w3-xlarge" ng-show="rounds[currentRound].type < 3">Enter number of {{getRoundName(currentRound)}}'s</p>
-				<p class="w3-xlarge" ng-hide="rounds[currentRound].type < 3">Enter score</p>
-				<input class="w3-xlarge w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
-				<p class="w3-xlarge w3-button w3-green w3-large" ng-click="submitScore()">Confirm</p>
+				<p class="w3-jumbo" ng-show="rounds[currentRound].type < 3">Enter number of {{getRoundName(currentRound)}}'s</p>
+				<p class="w3-jumbo" ng-hide="rounds[currentRound].type < 3">Enter score</p>
+				<input class="w3-jumbo w3-input w3-border" ng-model="input.currentScoreNum" type="number" min="0" />
+				<p class="w3-jumbo w3-button w3-green w3-large" ng-click="submitScore()">Confirm</p>
 			</div>
 			<!--
 				Game finished
 			-->
 			<div class="w3-mobile" ng-show="gameFinished">
-				<table class="w3-xlarge w3-table-all">
+				<table class="w3-jumbo w3-table-all">
 					<tr><th>Name</th><th>Score</th></tr>
 					<tr class="" ng-repeat="(index, player) in sortPlayers()">
 						<td>{{player.name}}	</td>
