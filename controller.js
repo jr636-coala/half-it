@@ -10,13 +10,13 @@ app.controller("tController", ($scope, $interval) => {
 		{index: 4, name: "Thin "},
 		{index: 5, name: "Over "},
 		{index: 6, name: "Exactly "},
-		{index: 5, name: "Any Double"},
-		{index: 6, name: "Any Triple"},
-		{index: 7, name: "Bowtie"},
-		{index: 8, name: "Black-White-Black"},
-		{index: 9, name: "All same color"},
-		{index: 10, name: "All different color"},
-		{index: 11, name: "25 bull"},
+		{index: 7, name: "Any Double"},
+		{index: 8, name: "Any Triple"},
+		{index: 9, name: "Bowtie"},
+		{index: 10, name: "Black-White-Black"},
+		{index: 11, name: "All same color"},
+		{index: 12, name: "All different color"},
+		{index: 13, name: "25 bull"},
 	];
 	$scope.rounds = [{type: 1, num: 19}, {type: 7, num: 0}];
 	$scope.defaultrounds = $scope.rounds.concat();
